@@ -886,7 +886,7 @@ final List<Puzzle> _puzzles = [
     difficulty: 4,
     question: Bilingual(en: 'Tap until the counter shows exactly 10. Every 3rd tap counts as 2!', hi: 'तब तक टैप करें जब तक काउंटर 10 न दिखाए। हर तीसरा टैप 2 गिना जाता है!'),
     answer: Bilingual(en: '8', hi: '8'),
-    hint: Bilingual(en: 'Sequence: 1+1+2+1+1+2+1+1 = 10. Count the number of taps (not the total).', hi: 'क्रम: 1+1+2+1+1+2+1+1 = 10। टैप्स गिनें (योग नहीं)।'),,
+    hint: Bilingual(en: 'Sequence: 1+1+2+1+1+2+1+1 = 10. Count the number of taps (not the total).', hi: 'क्रम: 1+1+2+1+1+2+1+1 = 10। टैप्स गिनें (योग नहीं)।'),
     visual: VisualScene(
       bg: 'linear-gradient(135deg, #1a1a2e, #16213e)',
       interaction: InteractionType.tapCount,
@@ -971,13 +971,13 @@ final List<Puzzle> _puzzles = [
     difficulty: 4,
     question: Bilingual(en: 'Tap the button 0 times. Yes, ZERO. Just wait for the timer.', hi: 'बटन को 0 बार टैप करें। जी हाँ — शून्य। बस टाइमर खत्म होने का इंतज़ार करें।'),
     answer: Bilingual(en: '0', hi: '0'),
-    hint: Bilingual(en: 'The hardest command to follow is "do nothing."', hi: 'सबसे कठिन आदेश है "कुछ मत करो।"'),,
+    hint: Bilingual(en: 'The hardest command to follow is "do nothing."', hi: 'सबसे कठिन आदेश है "कुछ मत करो।"'),
     visual: VisualScene(
       bg: 'linear-gradient(135deg, #2d1b3d, #1a0a2e)',
       interaction: InteractionType.tapCount,
       elements: [
         VisualElement(id: 'timer', type: VisualElementType.text, x: 50, y: 25, content: '⏱ 5', size: 40, color: '#FF6B6B', bold: true),
-        VisualElement(id: 'btn', type: VisualElementType.button, x: 50, y: 55, w: 200, h: 70, color: '#FF4757', content: '🚫 DON'T TAP', interact: true, correct: false, animate: 'pulse'),
+        VisualElement(id: 'btn', type: VisualElementType.button, x: 50, y: 55, w: 200, h: 70, color: '#FF4757', content: '🚫 DON\'T TAP', interact: true, correct: false, animate: 'pulse'),
         VisualElement(id: 'instr', type: VisualElementType.text, x: 50, y: 82, content: 'Tap ZERO times and wait...', size: 14, color: '#aaa'),
         VisualElement(id: 'check', type: VisualElementType.text, x: 50, y: 10, content: '✓ Just wait', size: 12, color: '#6BCB77'),
       ],
@@ -991,7 +991,7 @@ final List<Puzzle> _puzzles = [
     difficulty: 3,
     question: Bilingual(en: 'Get the key out of the snow globe! The globe is sealed and the key is buried under snow.', hi: 'स्नो ग्लोब से चाबी निकालें! ग्लोब सील है और चाबी बर्फ के नीचे दबी है।'),
     answer: Bilingual(en: 'shake', hi: 'shake'),
-    hint: Bilingual(en: 'What happens to a snow globe when you shake it vigorously? The snow settles!', hi: 'जब आप स्नो ग्लोब को ज़ोर से हिलाते हैं तो क्या होता है? बर्फ जम जाती है!'),,
+    hint: Bilingual(en: 'What happens to a snow globe when you shake it vigorously? The snow settles!', hi: 'जब आप स्नो ग्लोब को ज़ोर से हिलाते हैं तो क्या होता है? बर्फ जम जाती है!'),
     visual: VisualScene(
       bg: 'linear-gradient(135deg, #e8f4f8, #b8e3f0)',
       interaction: InteractionType.tapAny,
@@ -1015,7 +1015,7 @@ final List<Puzzle> _puzzles = [
     difficulty: 2,
     question: Bilingual(en: 'Wake the genie trapped inside the bottle! Tapping does nothing — the cork is stuck.', hi: 'बोतल में फंसे जिन्न को जगाएँ! टैप करने से कुछ नहीं होता — कॉर्क बहुत मज़बूती से बंद है।'),
     answer: Bilingual(en: 'shake', hi: 'shake'),
-    hint: Bilingual(en: 'How do you open a stubborn bottle that won\'t budge?', hi: 'आप एक जिद्दी बोतल कैसे खोलते हैं?'),,
+    hint: Bilingual(en: 'How do you open a stubborn bottle that won\'t budge?', hi: 'आप एक जिद्दी बोतल कैसे खोलते हैं?'),
     visual: VisualScene(
       bg: 'linear-gradient(135deg, #2d1b3d, #1a0a2e)',
       interaction: InteractionType.tapAny,
@@ -1039,7 +1039,7 @@ final List<Puzzle> _puzzles = [
     difficulty: 4,
     question: Bilingual(en: 'Move the ball to the finish line! A wall blocks the path.', hi: 'गेंद को फिनिश लाइन तक ले जाएँ! एक दीवार रास्ता रोक रही है।'),
     answer: Bilingual(en: 'shake', hi: 'shake'),
-    hint: Bilingual(en: 'What if gravity changed direction? Tilt and roll the ball over the wall!', hi: 'क्या होगा अगर गुरुत्वाकर्षण बदल जाए? गेंद को दीवार के ऊपर से घुमाएँ!'),,
+    hint: Bilingual(en: 'What if gravity changed direction? Tilt and roll the ball over the wall!', hi: 'क्या होगा अगर गुरुत्वाकर्षण बदल जाए? गेंद को दीवार के ऊपर से घुमाएँ!'),
     visual: VisualScene(
       bg: 'linear-gradient(135deg, #1a3a2a, #2d5a3d)',
       interaction: InteractionType.tapAny,

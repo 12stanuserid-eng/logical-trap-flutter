@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:logical_trap_game/models/puzzle.dart';
 import 'package:logical_trap_game/game/game_engine.dart';
