@@ -5,12 +5,12 @@ import 'package:logical_trap_game/game/game_engine.dart';
 /// Renders interactive visual puzzle scenes
 class VisualSceneWidget extends StatefulWidget {
   final VisualScene scene;
-  final Function(String) onSubmit;
+  final Function(VisualElement) onElementTap;
 
   const VisualSceneWidget({
     super.key,
     required this.scene,
-    required this.onSubmit,
+    required this.onElementTap,
   });
 
   @override
@@ -22,7 +22,7 @@ class _VisualSceneWidgetState extends State<VisualSceneWidget>
   final Map<String, AnimationController> _controllers = {};
   final Map<String, Animation<double>> _animations = {};
   String? _wrongElementId;
-  bool _submitted = false;
+  final Map<String, AnimationController> _wrongControllers = {};
 
   @override
   void initState() {
@@ -75,46 +75,45 @@ class _VisualSceneWidgetState extends State<VisualSceneWidget>
     for (final c in _controllers.values) {
       c.dispose();
     }
+    for (final c in _wrongControllers.values) {
+      c.dispose();
+    }
     super.dispose();
   }
 
   void _handleTap(VisualElement el) {
-    if (_submitted) return;
-
-    final engine = GameEngine();
-    final puzzle = engine.currentPuzzle;
-
     if (widget.scene.interaction == InteractionType.tapCorrect) {
-      if (el.correct) {
-        setState(() => _submitted = true);
-        widget.onSubmit(puzzle.answer.get('en'));
-      } else {
-        setState(() {
-          _wrongElementId = el.id;
-        });
-        Future.delayed(const Duration(milliseconds: 500), () {
-          if (mounted) setState(() => _wrongElementId = null);
-        });
-      }
-    } else if (widget.scene.interaction == InteractionType.tapCount && el.correct) {
-      engine.incrementTapCount();
-      final needed = int.tryParse(puzzle.answer.get('en')) ?? 1;
-      if (engine.currentTapCount >= needed) {
-        setState(() => _submitted = true);
-        widget.onSubmit('$needed');
-      } else {
-        setState(() {
-          // Visual feedback: flash the element
-        });
+      if (!el.correct && el.interact) {
+        // Wrong tap animation
+        _playWrongAnimation(el.id);
       }
     }
+
+    widget.onElementTap(el);
+  }
+
+  void _playWrongAnimation(String id) {
+    final controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+    _wrongControllers[id] = controller;
+    controller.forward();
+    setState(() => _wrongElementId = id);
+    Future.delayed(const Duration(milliseconds: 500), () {
+      if (mounted) {
+        controller.dispose();
+        _wrongControllers.remove(id);
+        if (_wrongElementId == id) setState(() => _wrongElementId = null);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final sceneWidth = size.width - 32;
-    final sceneHeight = sceneWidth * 0.85;
+    final sceneWidth = size.width - 16;
+    final sceneHeight = sceneWidth * 0.9;
 
     return Container(
       width: sceneWidth,
@@ -124,7 +123,7 @@ class _VisualSceneWidgetState extends State<VisualSceneWidget>
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.15),
+            color: Colors.black.withOpacity(0.15),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -165,10 +164,12 @@ class _VisualSceneWidgetState extends State<VisualSceneWidget>
                 ? null
                 : BorderRadius.circular(12),
             shape: el.shape == 'circle' ? BoxShape.circle : BoxShape.rectangle,
-            border: el.border != null ? Border.all(
-              color: _parseColor(el.border!.split(' ').last),
-              width: 2,
-            ) : null,
+            border: el.border != null
+                ? Border.all(
+                    color: _parseColor(el.border!.split(' ').last),
+                    width: 2,
+                  )
+                : null,
           ),
         );
         break;
@@ -179,9 +180,9 @@ class _VisualSceneWidgetState extends State<VisualSceneWidget>
             fontSize: el.size ?? 14,
             color: _parseColor(el.color ?? '#333'),
             fontWeight: el.bold ? FontWeight.bold : FontWeight.normal,
-            shadows: el.shadow != null ? [
-              Shadow(color: _parseColor(el.shadow!), blurRadius: 4)
-            ] : null,
+            shadows: el.shadow != null
+                ? [Shadow(color: _parseColor(el.shadow!), blurRadius: 4)]
+                : null,
           ),
           textAlign: TextAlign.center,
         );
@@ -194,13 +195,13 @@ class _VisualSceneWidgetState extends State<VisualSceneWidget>
             gradient: LinearGradient(
               colors: [
                 _parseColor(el.color ?? '#6C63FF'),
-                _parseColor(el.color ?? '#6C63FF').withValues(alpha: 0.8),
+                _parseColor(el.color ?? '#6C63FF').withOpacity(0.8),
               ],
             ),
             borderRadius: BorderRadius.circular(25),
             boxShadow: [
               BoxShadow(
-                color: _parseColor(el.color ?? '#6C63FF').withValues(alpha: 0.4),
+                color: _parseColor(el.color ?? '#6C63FF').withOpacity(0.4),
                 blurRadius: 8,
                 offset: const Offset(0, 4),
               ),
@@ -245,8 +246,6 @@ class _VisualSceneWidgetState extends State<VisualSceneWidget>
             case 'pulse':
               scale = anim.value;
               break;
-            case 'glow':
-              break;
             case 'wiggle':
               dx = anim.value;
               break;
@@ -266,6 +265,25 @@ class _VisualSceneWidgetState extends State<VisualSceneWidget>
       );
     } else {
       positioned = child;
+    }
+
+    // Wrong animation
+    if (isWrong) {
+      positioned = AnimatedBuilder(
+        animation: _wrongControllers[el.id]!,
+        builder: (context, child) {
+          final shakeX = sin(_wrongControllers[el.id]!.value * 12) * 6;
+          final shakeY = cos(_wrongControllers[el.id]!.value * 8) * 3;
+          return Transform.translate(
+            offset: Offset(shakeX, shakeY),
+            child: Opacity(
+              opacity: 1 - _wrongControllers[el.id]!.value * 0.3,
+              child: child,
+            ),
+          );
+        },
+        child: positioned,
+      );
     }
 
     // Apply rotation

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:logical_trap_game/models/puzzle.dart';
 import 'package:logical_trap_game/data/puzzles.dart';
 
-/// Core game state manager
+/// Core game state manager — simplified for visual-only interaction
 class GameEngine extends ChangeNotifier {
   static final GameEngine _instance = GameEngine._();
   factory GameEngine() => _instance;
@@ -18,6 +18,7 @@ class GameEngine extends ChangeNotifier {
   final Set<int> completedLevels = {};
   List<Puzzle>? _shuffledPuzzles;
   int _currentTapCount = 0;
+  bool _levelJustCompleted = false;
 
   List<Puzzle> get shuffledPuzzles {
     if (_shuffledPuzzles == null) {
@@ -32,6 +33,8 @@ class GameEngine extends ChangeNotifier {
   int get completedCount => completedLevels.length;
   bool get isGameOver => lives <= 0;
   bool get isAllCompleted => completedLevels.length >= totalLevels;
+  bool get levelJustCompleted => _levelJustCompleted;
+  int get currentTapCount => _currentTapCount;
 
   /// Initialize/reset game
   void init() {
@@ -42,45 +45,38 @@ class GameEngine extends ChangeNotifier {
     currentLevel = 0;
     completedLevels.clear();
     _currentTapCount = 0;
+    _levelJustCompleted = false;
     _shuffledPuzzles = List.from(puzzles)..shuffle(Random());
     notifyListeners();
   }
 
-  /// Load a specific level
+  /// Start a fresh game without shuffling (for level select)
+  void startFromLevel(int level) {
+    if (_shuffledPuzzles == null) {
+      _shuffledPuzzles = List.from(puzzles)..shuffle(Random());
+    }
+    score = 0;
+    lives = 3;
+    hintsRemaining = 3;
+    streak = 0;
+    currentLevel = level;
+    _currentTapCount = 0;
+    _levelJustCompleted = false;
+    notifyListeners();
+  }
+
+  /// Load a specific level (for level select)
   void loadLevel(int index) {
     if (index < shuffledPuzzles.length) {
       currentLevel = index;
       _currentTapCount = 0;
+      _levelJustCompleted = false;
       notifyListeners();
     }
   }
 
-  /// Check answer and return result
-  AnswerResult checkAnswer(String userAnswer) {
-    final puzzle = currentPuzzle;
-    if (puzzle.type == 'visual' && puzzle.visual != null) {
-      final interaction = puzzle.visual!.interaction;
-      if (interaction == InteractionType.tapCount) {
-        final needed = int.tryParse(puzzle.answer.get('en')) ?? 1;
-        final given = int.tryParse(userAnswer) ?? 0;
-        if (given >= needed) {
-          return _handleCorrect();
-        }
-        return AnswerResult(false, 'Keep tapping!', score);
-      }
-    }
-
-    final correct = puzzle.answer.get('en');
-    final user = userAnswer.trim().toLowerCase();
-    final expected = correct.trim().toLowerCase();
-
-    if (user == expected) {
-      return _handleCorrect();
-    }
-    return _handleWrong();
-  }
-
-  AnswerResult _handleCorrect() {
+  /// Handle tapping the correct element
+  AnswerResult handleCorrectTap() {
     final puzzle = currentPuzzle;
     streak++;
     final bonus = streak > 3 ? 50 : 0;
@@ -92,18 +88,37 @@ class GameEngine extends ChangeNotifier {
     }
 
     _currentTapCount = 0;
+    _levelJustCompleted = true;
 
-    final msg = streak > 3 ? '🔥 ${streak}x streak! +$pts' : '+$pts points!';
+    final msg = streak > 3 ? '🔥 ${streak}x Streak!' : '✓ Correct!';
     notifyListeners();
-    return AnswerResult(true, msg, score, streak);
+    return AnswerResult(true, msg, score, streak, pts);
   }
 
-  AnswerResult _handleWrong() {
+  /// Handle tapping a wrong element
+  AnswerResult handleWrongTap() {
     streak = 0;
     lives--;
     _currentTapCount = 0;
     notifyListeners();
-    return AnswerResult(false, 'Wrong! Try again', score);
+    return AnswerResult(false, '✗ Oops!', score);
+  }
+
+  /// Handle shake detection for shake-type puzzles
+  AnswerResult handleShake() {
+    return handleCorrectTap();
+  }
+
+  /// Increment tap count for tapCount puzzles
+  void incrementTapCount() {
+    _currentTapCount++;
+    notifyListeners();
+  }
+
+  /// Get the needed tap count for the current tapCount puzzle
+  int get neededTapCount {
+    final answer = currentPuzzle.answer.get('en');
+    return int.tryParse(answer) ?? 1;
   }
 
   /// Use a hint
@@ -115,23 +130,17 @@ class GameEngine extends ChangeNotifier {
     return hint;
   }
 
-  /// For visual tap-count
-  void incrementTapCount() {
-    _currentTapCount++;
-  }
-
-  int get currentTapCount => _currentTapCount;
-
   /// Get the next incomplete level
   int get nextLevel {
     for (int i = 0; i < shuffledPuzzles.length; i++) {
       if (!completedLevels.contains(i)) return i;
     }
-    return 0; // all completed
+    return 0;
   }
 
   /// Move to next puzzle
   void nextPuzzle() {
+    _levelJustCompleted = false;
     final next = currentLevel + 1;
     if (next < shuffledPuzzles.length) {
       currentLevel = next;
@@ -140,6 +149,8 @@ class GameEngine extends ChangeNotifier {
       for (int i = 0; i < shuffledPuzzles.length; i++) {
         if (!completedLevels.contains(i)) {
           currentLevel = i;
+          _currentTapCount = 0;
+          notifyListeners();
           return;
         }
       }
@@ -149,9 +160,9 @@ class GameEngine extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Normalize string for comparison
-  static String normalize(String s) {
-    return s.toLowerCase().trim().replaceAll(RegExp(r'[^\w\s]'), '');
+  /// Clear just completed flag (after animation)
+  void clearLevelJustCompleted() {
+    _levelJustCompleted = false;
   }
 }
 
@@ -161,6 +172,7 @@ class AnswerResult {
   final String message;
   final int score;
   final int streak;
+  final int points;
 
-  AnswerResult(this.correct, this.message, this.score, [this.streak = 0]);
+  AnswerResult(this.correct, this.message, this.score, [this.streak = 0, this.points = 0]);
 }
