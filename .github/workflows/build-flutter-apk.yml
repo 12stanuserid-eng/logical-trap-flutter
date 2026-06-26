@@ -48,10 +48,10 @@ jobs:
           cd /tmp/logical_trap_temp
           flutter analyze || true
 
-      - name: Build Release APK
+      - name: Build Release APK (split per ABI)
         run: |
           cd /tmp/logical_trap_temp
-          flutter build apk --debug
+          flutter build apk --debug --split-per-abi --target-platform android-arm64
           
       - name: Copy APK to workspace
         run: |
