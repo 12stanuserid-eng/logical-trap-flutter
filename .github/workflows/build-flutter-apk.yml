@@ -58,6 +58,13 @@ jobs:
           mkdir -p ${{ github.workspace }}/build/
           cp /tmp/logical_trap_temp/build/app/outputs/flutter-apk/*.apk ${{ github.workspace }}/build/
 
+      - name: Upload APK to catbox.moe (direct download)
+        run: |
+          APK_PATH=$(ls ${{ github.workspace }}/build/*.apk | head -1)
+          echo "Uploading: $APK_PATH"
+          URL=$(curl -s -F "reqtype=fileupload" -F "fileToUpload=@$APK_PATH" "https://catbox.moe/user/api.php")
+          echo "DOWNLOAD_URL=$URL"
+          
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
