@@ -15,7 +15,7 @@ final List<Puzzle> _puzzles = [
     hint: Bilingual(en: 'Look at the barrel carefully — something is letting water out.', hi: 'बैरल को ध्यान से देखें — कुछ पानी बाहर निकाल रहा है।'),
     visual: VisualScene(
       bg: 'linear-gradient(135deg, #2a1f1a, #3d2b1f)',
-      interaction: InteractionType.$intType,
+      interaction: InteractionType.tapCorrect,
       elements: [
         VisualElement(
           id: 'barrel',
@@ -129,7 +129,7 @@ final List<Puzzle> _puzzles = [
     hint: Bilingual(en: 'Think about famous landmarks, not just positions.', hi: 'मशहूर इमारतों के बारे में सोचें, सिर्फ स्थिति के बारे में नहीं।'),
     visual: VisualScene(
       bg: 'linear-gradient(180deg, #87CEEB 0%, #90EE90 60%, #8B7355 100%)',
-      interaction: InteractionType.$intType,
+      interaction: InteractionType.tapCorrect,
       elements: [
         VisualElement(
           id: 'green',
@@ -237,7 +237,7 @@ final List<Puzzle> _puzzles = [
     hint: Bilingual(en: 'You might use it every morning.', hi: 'हर सुबह आप इसका इस्तेमाल कर सकते हैं।'),
     visual: VisualScene(
       bg: 'linear-gradient(135deg, #2a2a3e, #3a3a5e)',
-      interaction: InteractionType.$intType,
+      interaction: InteractionType.tapCorrect,
       elements: [
         VisualElement(
           id: 'comb_back',
@@ -417,7 +417,7 @@ final List<Puzzle> _puzzles = [
     hint: Bilingual(en: 'Some houses are named for their purpose, not their color.', hi: 'कुछ घरों के नाम उनके रंग के कारण नहीं, बल्कि उद्देश्य के कारण हैं।'),
     visual: VisualScene(
       bg: 'linear-gradient(180deg, #87CEEB 0%, #B0E0E6 40%, #228B22 100%)',
-      interaction: InteractionType.$intType,
+      interaction: InteractionType.tapCorrect,
       elements: [
         VisualElement(
           id: 'frame',
@@ -574,7 +574,7 @@ final List<Puzzle> _puzzles = [
     hint: Bilingual(en: 'A corner is formed where two straight lines meet.', hi: 'कोना दो सीधी रेखाओं के मिलने से बनता है।'),
     visual: VisualScene(
       bg: 'linear-gradient(135deg, #1a1a3e, #2a2a5e)',
-      interaction: InteractionType.$intType,
+      interaction: InteractionType.tapCorrect,
       elements: [
         VisualElement(
           id: 'circle',
@@ -682,7 +682,7 @@ final List<Puzzle> _puzzles = [
     hint: Bilingual(en: 'One cat catches one mouse in 3 minutes. In 100 minutes, one cat catches ~33 mice.', hi: 'एक बिल्ली एक चूहा 3 मिनट में पकड़ती है। 100 मिनट में एक बिल्ली ~33 चूहे पकड़ेगी।'),
     visual: VisualScene(
       bg: 'linear-gradient(135deg, #1a2a1a, #2a3a2a)',
-      interaction: InteractionType.$intType,
+      interaction: InteractionType.tapCorrect,
       elements: [
         VisualElement(
           id: 'cat1',
@@ -866,7 +866,7 @@ final List<Puzzle> _puzzles = [
     hint: Bilingual(en: 'Read the question again — very carefully!', hi: 'सवाल फिर से ध्यान से पढ़ें!'),
     visual: VisualScene(
       bg: 'linear-gradient(135deg, #2a1a2a, #3a2a3a)',
-      interaction: InteractionType.$intType,
+      interaction: InteractionType.tapCorrect,
       elements: [
         VisualElement(
           id: 'sign',
@@ -1007,7 +1007,7 @@ final List<Puzzle> _puzzles = [
     hint: Bilingual(en: 'Maybe you don\'t need to tap the guard. What else could wake him without noise?', hi: 'शायद आपको गार्ड को नहीं, बल्कि घंटी को टैप करना चाहिए।'),
     visual: VisualScene(
       bg: 'linear-gradient(180deg, #0a0a1a 0%, #1a1a3a 50%, #2a1a0a 100%)',
-      interaction: InteractionType.$intType,
+      interaction: InteractionType.tapCorrect,
       elements: [
         VisualElement(
           id: 'guard',
@@ -1084,7 +1084,7 @@ final List<Puzzle> _puzzles = [
     hint: Bilingual(en: 'It\'s a prank! The warning is the joke — just tap it.', hi: 'यह एक मज़ाक है! चेतावनी ही मज़ाक है — बस इसे टैप करें।'),
     visual: VisualScene(
       bg: 'linear-gradient(135deg, #2a1a1a, #3a1a1a)',
-      interaction: InteractionType.$intType,
+      interaction: InteractionType.tapCount,
       elements: [
         VisualElement(
           id: 'big_btn',
@@ -1131,7 +1131,7 @@ final List<Puzzle> _puzzles = [
     hint: Bilingual(en: 'Look at the LABELS on the buttons, not their positions.', hi: 'बटनों की स्थिति नहीं, बल्कि उन पर लिखे लेबल देखें।'),
     visual: VisualScene(
       bg: 'linear-gradient(135deg, #1a1a2e, #2a2a4e)',
-      interaction: InteractionType.$intType,
+      interaction: InteractionType.tapCount,
       elements: [
         VisualElement(
           id: 'btn_left',
@@ -1236,7 +1236,7 @@ final List<Puzzle> _puzzles = [
     hint: Bilingual(en: 'You passed the SECOND place runner, not the first.', hi: 'आपने दूसरे स्थान वाले को पीछे छोड़ा, पहले को नहीं।'),
     visual: VisualScene(
       bg: 'linear-gradient(180deg, #87CEEB 0%, #90EE90 60%, #8B7355 100%)',
-      interaction: InteractionType.$intType,
+      interaction: InteractionType.tapCorrect,
       elements: [
         VisualElement(
           id: 'track',
@@ -1349,7 +1349,7 @@ final List<Puzzle> _puzzles = [
     hint: Bilingual(en: 'Think about which animals can and cannot lay eggs.', hi: 'सोचिए कि कौन से जानवर अंडे दे सकते हैं।'),
     visual: VisualScene(
       bg: 'linear-gradient(180deg, #87CEEB 0%, #FFE4B5 40%, #8B7355 100%)',
-      interaction: InteractionType.$intType,
+      interaction: InteractionType.tapCorrect,
       elements: [
         VisualElement(
           id: 'barn',
@@ -1439,7 +1439,7 @@ final List<Puzzle> _puzzles = [
     hint: Bilingual(en: 'If they survived the crash, are they... still alive?', hi: 'अगर वे दुर्घटना में बच गए, तो क्या वे... अभी भी जीवित हैं?'),
     visual: VisualScene(
       bg: 'linear-gradient(180deg, #1a1a3a 0%, #2a3a5a 40%, #8B7355 100%)',
-      interaction: InteractionType.$intType,
+      interaction: InteractionType.tapCorrect,
       elements: [
         VisualElement(
           id: 'plane',
@@ -1553,7 +1553,7 @@ final List<Puzzle> _puzzles = [
     hint: Bilingual(en: 'After you put 1 book in, it\'s no longer empty.', hi: '1 किताब रखने के बाद वह खाली नहीं रहेगी।'),
     visual: VisualScene(
       bg: 'linear-gradient(135deg, #2a1a0a, #3a2a1a)',
-      interaction: InteractionType.$intType,
+      interaction: InteractionType.tapCorrect,
       elements: [
         VisualElement(
           id: 'shelf_top',
@@ -1654,7 +1654,7 @@ final List<Puzzle> _puzzles = [
     hint: Bilingual(en: 'Before you can light anything else, what must you light first?', hi: 'कुछ और जलाने से पहले, पहले क्या जलाना होगा?'),
     visual: VisualScene(
       bg: 'linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%)',
-      interaction: InteractionType.$intType,
+      interaction: InteractionType.tapCorrect,
       elements: [
         VisualElement(
           id: 'match',
@@ -1732,9 +1732,7 @@ final List<Puzzle> _puzzles = [
     title: 'Hidden F',
     type: 'choice',
     difficulty: 3,
-    question: Bilingual(en: 'Count the letter F:
-FINISHED FILES ARE THE RESULT OF YEARS OF SCIENTIFIC STUDY COMBINED WITH THE EXPERIENCE OF YEARS', hi: 'F गिनें:
-FINISHED FILES ARE THE RESULT OF YEARS OF SCIENTIFIC STUDY COMBINED WITH THE EXPERIENCE OF YEARS'),
+    question: Bilingual(en: 'Count the letter F:\nFINISHED FILES ARE THE RESULT OF YEARS OF SCIENTIFIC STUDY COMBINED WITH THE EXPERIENCE OF YEARS', hi: 'F गिनें:\nFINISHED FILES ARE THE RESULT OF YEARS OF SCIENTIFIC STUDY COMBINED WITH THE EXPERIENCE OF YEARS'),
     answer: Bilingual(en: '6', hi: '6'),
     hint: Bilingual(en: 'Some F\'s are in words like "OF" that you skim over. Count every word!', hi: 'कुछ F "OF" जैसे शब्दों में हैं जिन्हें आप जल्दी पढ़ लेते हैं। हर शब्द गिनें!'),
     options: [
@@ -1771,7 +1769,7 @@ FINISHED FILES ARE THE RESULT OF YEARS OF SCIENTIFIC STUDY COMBINED WITH THE EXP
     hint: Bilingual(en: 'Focus on "YOU take away 2." Those apples are now in YOUR hands.', hi: 'ध्यान दें "आप 2 सेब ले लेते हैं।" वे सेब अब आपके पास हैं।'),
     visual: VisualScene(
       bg: 'linear-gradient(135deg, #2a1a0a, #3a2a1a)',
-      interaction: InteractionType.$intType,
+      interaction: InteractionType.tapCount,
       elements: [
         VisualElement(
           id: 'table',
@@ -1837,7 +1835,7 @@ FINISHED FILES ARE THE RESULT OF YEARS OF SCIENTIFIC STUDY COMBINED WITH THE EXP
     hint: Bilingual(en: 'Check EVERY digit. Is there one digit that makes the whole product zero?', hi: 'हर अंक जाँचें। कोई ऐसा अंक जो पूरे गुणन को शून्य कर देता है?'),
     visual: VisualScene(
       bg: 'linear-gradient(135deg, #1a1a2e, #2a2a3e)',
-      interaction: InteractionType.$intType,
+      interaction: InteractionType.tapCorrect,
       elements: [
         VisualElement(
           id: 'screen',
@@ -2009,7 +2007,7 @@ FINISHED FILES ARE THE RESULT OF YEARS OF SCIENTIFIC STUDY COMBINED WITH THE EXP
     hint: Bilingual(en: 'Think about what he can physically reach inside the elevator.', hi: 'सोचिए वह लिफ्ट के अंदर शारीरिक रूप से किस बटन तक पहुँच सकता है।'),
     visual: VisualScene(
       bg: 'linear-gradient(135deg, #1a1a2e, #2a2a3e)',
-      interaction: InteractionType.$intType,
+      interaction: InteractionType.tapCorrect,
       elements: [
         VisualElement(
           id: 'panel',
@@ -2355,7 +2353,7 @@ FINISHED FILES ARE THE RESULT OF YEARS OF SCIENTIFIC STUDY COMBINED WITH THE EXP
     hint: Bilingual(en: 'Think about a common condition that sudden shock can cure instantly.', hi: 'एक आम समस्या जो अचानक झटके से तुरंत ठीक हो सकती है।'),
     visual: VisualScene(
       bg: 'linear-gradient(135deg, #2a1a0a, #3a2a1a)',
-      interaction: InteractionType.$intType,
+      interaction: InteractionType.tapCorrect,
       elements: [
         VisualElement(
           id: 'counter',
@@ -2474,7 +2472,7 @@ FINISHED FILES ARE THE RESULT OF YEARS OF SCIENTIFIC STUDY COMBINED WITH THE EXP
     hint: Bilingual(en: 'How could someone reach the desert without leaving footprints? What is that "pack"?', hi: 'कोई बिना पैरों के निशान छोड़े रेगिस्तान में कैसे पहुँच सकता है? वह "बैग" क्या है?'),
     visual: VisualScene(
       bg: 'linear-gradient(180deg, #87CEEB 0%, #F4A460 30%, #EDC9AF 70%, #D2B48C 100%)',
-      interaction: InteractionType.$intType,
+      interaction: InteractionType.tapCorrect,
       elements: [
         VisualElement(
           id: 'sky',

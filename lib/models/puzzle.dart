@@ -137,7 +137,7 @@ class VisualScene {
 }
 
 /// Puzzle categories
-enum PuzzleCategory { logic, trick, math, observation, word, memory, speed, lateral }
+enum PuzzleCategory { logic, trick, math, observation, word, memory, speed, lateral, tap, shake }
 
 /// Complete puzzle model
 class Puzzle {
@@ -195,6 +195,8 @@ class Puzzle {
       case 'memory': return PuzzleCategory.memory;
       case 'speed': return PuzzleCategory.speed;
       case 'lateral': return PuzzleCategory.lateral;
+      case 'tap': return PuzzleCategory.tap;
+      case 'shake': return PuzzleCategory.shake;
       default: return PuzzleCategory.logic;
     }
   }
