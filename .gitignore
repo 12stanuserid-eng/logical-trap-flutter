@@ -1,0 +1,43 @@
+# Flutter
+.cocoapods/
+.idea/
+.dart_tool/
+.packages
+.pub/
+.pub-preload-cache/
+build/
+flutter_*.png
+linked_*.ds
+unlinked.ds
+unlinked_spec.ds
+
+# Android
+*.iml
+*.hprof
+*.keystore
+!upload-keystore.jks
+local.properties
+key.properties
+.gradle/
+gradle/
+gradlew
+gradlew.bat
+gradle.properties
+
+# iOS
+*.mode1v3
+*.mode2v3
+*.moved-aside
+*.pbxuser
+*.perspectivev3
+*.xcuserstate
+Pods/
+DerivedData/
+.symlinks/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# macOS
+.DS_Store

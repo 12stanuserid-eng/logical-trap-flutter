@@ -1,0 +1,65 @@
+name: Build Flutter APK
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.27'
+          channel: 'stable'
+          cache: true
+
+      - name: Create Flutter project
+        run: |
+          cd /tmp
+          flutter create --org com.logicaltrap --project-name logical_trap_game logical_trap_temp
+          echo "Flutter project created"
+
+      - name: Copy our source files
+        run: |
+          # Copy lib/ directory
+          cp -r ${{ github.workspace }}/lib/* /tmp/logical_trap_temp/lib/
+          # Copy our pubspec.yaml (with correct deps)
+          cp ${{ github.workspace }}/pubspec.yaml /tmp/logical_trap_temp/
+          # Copy assets if any
+          if [ -d "${{ github.workspace }}/assets" ]; then
+            cp -r ${{ github.workspace }}/assets /tmp/logical_trap_temp/
+          fi
+          echo "Source files copied"
+
+      - name: Install dependencies
+        run: |
+          cd /tmp/logical_trap_temp
+          flutter pub get
+
+      - name: Analyze
+        run: |
+          cd /tmp/logical_trap_temp
+          flutter analyze || true
+
+      - name: Build Release APK
+        run: |
+          cd /tmp/logical_trap_temp
+          flutter build apk --debug
+          
+      - name: Copy APK to workspace
+        run: |
+          mkdir -p ${{ github.workspace }}/build/
+          cp /tmp/logical_trap_temp/build/app/outputs/flutter-apk/*.apk ${{ github.workspace }}/build/
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: logical-trap-flutter-apk
+          path: build/*.apk
