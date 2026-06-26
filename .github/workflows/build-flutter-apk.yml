@@ -58,12 +58,18 @@ jobs:
           mkdir -p ${{ github.workspace }}/build/
           cp /tmp/logical_trap_temp/build/app/outputs/flutter-apk/*.apk ${{ github.workspace }}/build/
 
-      - name: Upload APK to catbox.moe (direct download)
+      - name: Upload APK to file sharing (direct download link)
         run: |
           APK_PATH=$(ls ${{ github.workspace }}/build/*.apk | head -1)
           echo "Uploading: $APK_PATH"
-          URL=$(curl -s -F "reqtype=fileupload" -F "fileToUpload=@$APK_PATH" "https://catbox.moe/user/api.php")
-          echo "DOWNLOAD_URL=$URL"
+          
+          # Try tmpfiles.org
+          echo "--- tmpfiles.org ---"
+          curl -s --max-time 120 -F "file=@$APK_PATH" "https://tmpfiles.org/api/v1/upload" | python3 -c "import json,sys; d=json.load(sys.stdin); print('TMPFILES_URL:', d.get('data',{}).get('url','FAILED'))"
+          
+          # Try file.io
+          echo "--- file.io ---"
+          curl -sL --max-time 180 -F "file=@$APK_PATH;filename=logical-trap.apk" "https://file.io/?expires=7d" | python3 -c "import json,sys; d=json.load(sys.stdin); print('FILEIO_URL:', d.get('link','FAILED'))"
           
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
